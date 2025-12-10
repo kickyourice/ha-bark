@@ -9,7 +9,7 @@ from homeassistant.components.notify import (
     BaseNotificationService
 )
 from homeassistant.const import CONF_HOST, CONF_TOKEN
-from .const import ATTR_AUTO_COPY, ATTR_BADGE, ATTR_COPY, ATTR_GROUP, ATTR_ICON, ATTR_SOUND, ATTR_URL, ATTR_LEVEL, DATA_BARK
+from .const import ATTR_AUTO_COPY, ATTR_BADGE, ATTR_COPY, ATTR_GROUP, ATTR_ICON, ATTR_SOUND, ATTR_URL, ATTR_LEVEL, DATA_BARK, ATTR_VOLUME
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -67,6 +67,8 @@ class BarkNotificationService(BaseNotificationService):
                     params["sound"] = sound
                 if (level := data.get(ATTR_LEVEL)) is not None:
                     params["level"] = level
+                if (volume := data.get(ATTR_VOLUME)) is not None:
+                    params["volume"] = volume
 
             try:
                 resp = requests.post(
